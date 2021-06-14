@@ -1,0 +1,1 @@
+/Users/nicholask/.config/nvim/init.vim
