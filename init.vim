@@ -47,7 +47,10 @@ Plug 'airblade/vim-gitgutter'
 " Diagnostics
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'folke/todo-comments.nvim'
 " nvim LSP
+Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
@@ -147,16 +150,20 @@ lua << EOF
          }
      end
      -- diagnostics
-     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-     vim.lsp.diagnostic.on_publish_diagnostics, {
-             virtual_text = {
-                 spacing = 4,
-             },
-             signs = true,
-             update_in_insert = false,
-             underline = true,
-         }
-     )
+
+     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        update_in_insert = false,
+        virtual_text = { spacing = 4, prefix = "●" },
+        severity_sort = true,
+    })
+
+     local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+
+     for type, icon in pairs(signs) do
+       local hl = "LspDiagnosticsSign" .. type
+       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+     end
 EOF
 
 " Lightline config
@@ -197,24 +204,20 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
+" Todo
+lua << EOF
+  require("todo-comments").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
 
 " DevIcons
 lua <<EOF
-require'nvim-web-devicons'.get_icons()
 require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- DevIcon will be appended to `name`
- override = {
-  zsh = {
-    icon = "",
-    color = "#428850",
-    name = "Zsh"
-  }
- };
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
-}
+ { default = true }
+};
 EOF
 
  
