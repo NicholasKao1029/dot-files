@@ -38,6 +38,7 @@ Plug '9mm/vim-closer'
 " visuals not really
 Plug 'mbbill/undotree'
 Plug 'itchyny/lightline.vim'
+Plug 'kyazdani42/nvim-tree.lua'
 "
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Git stuff
@@ -105,12 +106,12 @@ nnoremap <leader>fg <cmd>Telescope live_grep<CR>
 nnoremap <leader>fb <cmd>Telescope buffers<CR>
 nnoremap <leader>fh <cmd>Telescope help_tags<CR>
 
-nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>pv :NvimTreeToggle<CR>
 nnoremap <leader>ps :Rg<SPACE>
 nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
-
+ 
 let g:diagnostic_enable_virtual_text = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
@@ -196,6 +197,26 @@ lua <<EOF
     }
 EOF
 
+" Tree
+lua << EOF
+    vim.g.nvim_tree_ignore = { ".git", "node_modules" }
+    vim.g.nvim_tree_gitignore = 1
+    vim.g.nvim_tree_auto_open = 1
+    vim.g.nvim_tree_auto_close = 1
+    vim.g.nvim_tree_follow = 1
+    vim.g.nvim_tree_auto_ignore_ft = { "dashboard", "startify" }
+    vim.g.nvim_tree_indent_markers = 1
+    vim.g.nvim_tree_git_hl = 1
+    vim.g.nvim_tree_highlight_opened_files = 1
+    vim.g.nvim_tree_disable_netrw = 0
+    vim.g.nvim_tree_lsp_diagnostics = 1
+
+    require("nvim-tree.events").on_nvim_tree_ready(function()
+      vim.cmd("NvimTreeRefresh")
+    end)
+EOF
+
+
 " Trouble
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
@@ -207,9 +228,6 @@ nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 " Todo
 lua << EOF
   require("todo-comments").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
   }
 EOF
 
