@@ -147,6 +147,6 @@ alias lfzf="ls -la | fzf"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
-
+alias gd="git diff"
 
 bindkey -v
