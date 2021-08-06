@@ -21,7 +21,7 @@ set undofile
 set incsearch
 set termguicolors
 set scrolloff=16
-set colorcolumn=80
+" set colorcolumn=80
 set signcolumn=yes
 set backspace=2
 set cmdheight=2
@@ -67,7 +67,6 @@ Plug 'nightsense/cosmic_latte'
 Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'wadackel/vim-dogrun'
 Plug 'relastle/bluewery.vim'
 Plug 'chriskempson/base16-vim'
 call plug#end()
@@ -78,6 +77,31 @@ set shiftwidth=4
 " let g:tokyonight_italic_functions = 1
 " let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal"]
 
+" lua << EOF
+"     vim.g.tokyonight_dev = true
+"     vim.g.tokyonight_style = "storm"
+"     vim.g.tokyonight_sidebars = {
+"       "qf",
+"       "vista_kind",
+"       "terminal",
+"       "packer",
+"       "spectre_panel",
+"       "NeogitStatus",
+"       "help",
+"     }
+"     vim.g.tokyonight_cterm_colors = false
+"     vim.g.tokyonight_terminal_colors = true
+"     vim.g.tokyonight_italic_comments = true
+"     vim.g.tokyonight_italic_keywords = true
+"     vim.g.tokyonight_italic_functions = false
+"     vim.g.tokyonight_italic_variables = false
+"     vim.g.tokyonight_transparent = false
+"     vim.g.tokyonight_hide_inactive_statusline = true
+"     vim.g.tokyonight_dark_sidebar = true
+"     vim.g.tokyonight_dark_float = true
+"     vim.g.tokyonight_colors = {}
+"     vim.g.tokyonight_colors = { border = "orange" }
+" EOF
 " Load the colorscheme
 colorscheme gruvbox
 set t_Co=256
@@ -94,6 +118,7 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 " Leader macros
 let mapleader = ' '
 
+" inter-window movement
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
@@ -106,11 +131,33 @@ nnoremap <leader>fg <cmd>Telescope live_grep<CR>
 nnoremap <leader>fb <cmd>Telescope buffers<CR>
 nnoremap <leader>fh <cmd>Telescope help_tags<CR>
 
+" Directory pull up and misc
 nnoremap <leader>pv :NvimTreeToggle<CR>
 nnoremap <leader>ps :Rg<SPACE>
 nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
+nnoremap Y y$
+
+" cursor centering during movements
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" Undo breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+inoremap = =<c-g>u
+
+" Move text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+" nnoremap <leader>j :m .+1<CR>==
+" nnoremap <leader>k :m .-2<CR>==
  
 let g:diagnostic_enable_virtual_text = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
@@ -201,8 +248,8 @@ EOF
 lua << EOF
     vim.g.nvim_tree_ignore = { ".git", "node_modules" }
     vim.g.nvim_tree_gitignore = 1
-    vim.g.nvim_tree_auto_open = 1
-    vim.g.nvim_tree_auto_close = 1
+    vim.g.nvim_tree_auto_open = 0
+    vim.g.nvim_tree_auto_close = 0
     vim.g.nvim_tree_follow = 1
     vim.g.nvim_tree_auto_ignore_ft = { "dashboard", "startify" }
     vim.g.nvim_tree_indent_markers = 1
