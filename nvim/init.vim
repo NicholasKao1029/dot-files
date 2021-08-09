@@ -39,6 +39,8 @@ Plug '9mm/vim-closer'
 Plug 'mbbill/undotree'
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-tree.lua'
+"Linting
+Plug 'dense-analysis/ale'
 "
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Git stuff
@@ -171,6 +173,8 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 let g:completion_confirm_key = "\<C-y>"
 let g:completion_matching_smart_case = 1
+
+command! Format execute 'lua vim.lsp.buf.formatting()'
 
 " LSP CONFIG
 lua << EOF
