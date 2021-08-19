@@ -152,10 +152,12 @@ inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 inoremap = =<c-g>u
-inoremap } }<c-g>u
 inoremap { {<c-g>u
+inoremap } }<c-g>u
 inoremap [ [<c-g>u
 inoremap ] ]<c-g>u
+inoremap ( (<c-g>u
+inoremap ) )<c-g>u
 
 " Move text
 vnoremap J :m '>+1<CR>gv=gv
