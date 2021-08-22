@@ -32,16 +32,17 @@ set autoindent
 " set statusline+=%F
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
-" comments and parenthesis  
+" comments ,parenthesis and quotes
 Plug 'tpope/vim-commentary'
 Plug '9mm/vim-closer'
+Plug 'tpope/vim-surround'
 " visuals not really
 Plug 'mbbill/undotree'
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-tree.lua'
 "Linting
 Plug 'dense-analysis/ale'
-"
+" Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Git stuff
 Plug 'jremmen/vim-ripgrep'
