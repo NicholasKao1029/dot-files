@@ -47,7 +47,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Git stuff
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 " Diagnostics
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
@@ -57,7 +57,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-compe'
 " telescope requirements
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -168,18 +168,17 @@ inoremap <C-k> <esc>:m .-2<CR>==
 " nnoremap <leader>j :m .+1<CR>==
 " nnoremap <leader>k :m .-2<CR>==
  
-let g:diagnostic_enable_virtual_text = 1
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion
-set shortmess+=c
-let g:completion_confirm_key = "\<C-y>"
-let g:completion_matching_smart_case = 1
+" completion-nvim
+" let g:diagnostic_enable_virtual_text = 1
+" " let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" " Use <Tab> and <S-Tab> to navigate through popup menu
+" " Set completeopt to have a better completion experience
+" set completeopt=menuone,noinsert,noselect
+" " Avoid showing message extra message when using completion
+" set shortmess+=c
+" let g:completion_confirm_key = "\<C-y>"
+" let g:completion_matching_smart_case = 1
 
 command! Format execute 'lua vim.lsp.buf.formatting()'
 
@@ -195,7 +194,7 @@ let g:ale_linters_explicit = 1
 lua << EOF
      local nvim_lsp = require('lspconfig')
      local on_attach = function(client, bufnr)
-         require('completion').on_attach()
+         -- require('completion').on_attach()
          local opts = { noremap=true, silent=true }
          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -298,12 +297,62 @@ lua << EOF
 EOF
 
 " DevIcons
-lua <<EOF
-require'nvim-web-devicons'.setup {
- { default = true }
-};
+lua << EOF
+    require'nvim-web-devicons'.setup {
+     { default = true }
+    };
 EOF
 
+" Compe
+lua << EOF
+    vim.o.completeopt = "menuone,noselect"
+
+    require("compe").setup({
+      enabled = true,
+      autocomplete = true,
+      debug = false,
+      min_length = 1,
+      preselect = "enable", -- changed to "enable" to prevent auto select
+      throttle_time = 80,
+      source_timeout = 200,
+      incomplete_delay = 400,
+      max_abbr_width = 100,
+      max_kind_width = 100,
+      max_menu_width = 100,
+      documentation = {
+        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      },
+
+      source = {
+        path = true,
+        buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = false,
+        vsnip = false,
+        luasnip = true,
+        treesitter = false,
+        emoji = true,
+        spell = true,
+      },
+    })
+
+
+    local function complete()
+      if vim.fn.pumvisible() == 1 then
+        return vim.fn["compe#confirm"]({ keys = "<cr>", select = true })
+      else
+        return require("nvim-autopairs").autopairs_cr()
+      end
+    end
+
+    vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])
+EOF
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap("<C-Space>", "compe#complete()", { expr = true })
+" inoremap("<C-e>", "compe#close('<C-e>)", { expr = true })
+" imap("<CR>", complete, { expr = true })
  
 
 " hi! Normal ctermbg=NONE guibg=NONE
