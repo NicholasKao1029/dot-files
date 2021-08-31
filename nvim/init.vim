@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'mbbill/undotree'
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'lukas-reineke/indent-blankline.nvim'
 "Linting
 Plug 'dense-analysis/ale'
 " Markdown
