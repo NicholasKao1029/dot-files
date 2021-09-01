@@ -32,6 +32,7 @@ set autoindent
 " set statusline+=%F
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
+Plug 'nvim-lua/plenary.nvim'
 " comments ,parenthesis and quotes
 Plug 'tpope/vim-commentary'
 Plug '9mm/vim-closer'
@@ -52,7 +53,6 @@ Plug 'lewis6991/gitsigns.nvim'
 " Diagnostics
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 " nvim LSP
 Plug 'folke/lsp-colors.nvim'
@@ -302,6 +302,11 @@ lua << EOF
     require'nvim-web-devicons'.setup {
      { default = true }
     };
+EOF
+
+" gitsigns
+lua << EOF
+    require('gitsigns').setup()
 EOF
 
 " Compe
