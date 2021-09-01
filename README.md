@@ -38,3 +38,6 @@ dot and config files for stuff
 
 
 
+## TODOs
+- Think about moving from oh my zsh and running zsh by itself to understand zsh shell more
+- Update nvim to lua and organize plugins and configs in a neater file format structure
