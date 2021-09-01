@@ -14,17 +14,21 @@ dot and config files for stuff
 	- install [brew](https://brew.sh/)
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 	- sym link approrpriate dot files inside these repo
-		- zsh
-			- zsh comes with iTerm2 automatically
-		- nvim
-			- download
-		- bash
-			- ?
-		- tmux
-			- download
-		- Git
-			- author change
-			- have to add personal token.
+		- ln -s ~/.../dot-files/zsh/.zshrc ~/.zshrc
+			- zsh
+				- zsh comes with iTerm2 automatically
+			- nvim
+				- download
+				- install [plug](https://github.com/junegunn/vim-plug)
+				- :PlugInstall
+				- 
+			- bash
+				- ?
+			- tmux
+				- download
+			- Git
+				- author change
+				- have to add personal token.
 
 - Repos
 	- from harddrive
