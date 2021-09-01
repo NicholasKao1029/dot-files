@@ -22,6 +22,9 @@ dot and config files for stuff
 			- ?
 		- tmux
 			- download
+		- Git
+			- author change
+			- have to add personal token.
 
 - Repos
 	- from harddrive
