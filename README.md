@@ -8,27 +8,39 @@ dot and config files for stuff
 	- Docker
 	- Spotify
 	- Vscode
+        - settings sync extension
 	- iTerm2
+        - Install theme (Gruvbox currently)
+        - NerdFonts
+        
 
 - Installing stuff
 	- install [brew](https://brew.sh/)
+        - brew install tmux
+        - brew install npm 
+        - brew install yarn
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 	- sym link approrpriate dot files inside these repo
 		- ln -s ~/.../dot-files/zsh/.zshrc ~/.zshrc
 			- zsh
 				- zsh comes with iTerm2 automatically
+                - when exporting $ZSH inside of .zshrc the user is hard coded which causes problems if not the same
 			- nvim
 				- download
 				- install [plug](https://github.com/junegunn/vim-plug)
 				- :PlugInstall
-				- 
+				- TECH DEBT
+                    - currently you're symlinking from the ~/.config/nvim/init.vim which is the method when transfering from vim to nvim
+                    - When you move everything to LUA to take advantage of nvim fully you should symlink to .config instead or have 2 symlinks
 			- bash
-				- ?
+				- already installed
 			- tmux
-				- download
+				- brew install
 			- Git
 				- author change
 				- have to add personal token.
+    - install [NerdFont](https://www.nerdfonts.com/font-downloads)
+    
 
 - Repos
 	- from harddrive
