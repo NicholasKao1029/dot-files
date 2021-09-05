@@ -18,8 +18,10 @@ dot and config files for stuff
 	- install [brew](https://brew.sh/)
         - brew install tmux
         - brew install npm 
+        - brew install node
         - brew install yarn
         - brew install nvim ?
+        - brew install fzf
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
         - need to install Language servers
         - https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md

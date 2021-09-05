@@ -115,7 +115,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias python="python3"
 alias venv="python3 -m venv"
-eval "$(direnv hook zsh)" 
+# eval "$(direnv hook zsh)" 
 alias pip="pip3"
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
@@ -152,3 +152,4 @@ alias gd="git diff"
 alias gds="git diff --staged"
 
 bindkey -v
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
