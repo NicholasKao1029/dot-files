@@ -19,7 +19,15 @@ dot and config files for stuff
         - brew install tmux
         - brew install npm 
         - brew install yarn
+        - brew install nvim ?
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+        - need to install Language servers
+        - https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
+            - pyright
+            - tsserver
+            - html 
+            - jsonls
+        - Need to TS install for TreeSitter syntax highlighting [link](https://github.com/nvim-treesitter/nvim-treesitter#language-parsers)
 	- sym link approrpriate dot files inside these repo
 		- ln -s ~/.../dot-files/zsh/.zshrc ~/.zshrc
 			- zsh
