@@ -58,13 +58,14 @@ Plug 'folke/todo-comments.nvim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
 Plug 'hrsh7th/nvim-compe'
 " telescope requirements
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
-" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 "Themes
 Plug 'gruvbox-community/gruvbox'
 "B team Themes
@@ -216,7 +217,7 @@ lua << EOF
          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics({}, bufnr,_,client.id )<CR>', opts)
      end
      -- Have to download the language servers
-     local servers = {'pyright', 'tsserver', 'html', 'jsonls'}
+     local servers = {'pyright', 'tsserver', 'html', 'jsonls', 'hls'}
      for _, lsp in ipairs(servers) do 
          nvim_lsp[lsp].setup {
              on_attach=on_attach
@@ -253,56 +254,59 @@ let g:lightline = {
 " Telescope
 lua << EOF 
     require('telescope').setup{
-      defaults = {
+    defaults = {
         vimgrep_arguments = {
-          'rg',
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case'
-        },
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case'
+            },
         prompt_prefix = "> ",
         selection_caret = "> ",
-        entry_prefix = "  ",
-        initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "descending",
-        layout_strategy = "horizontal",
-        layout_config = {
-          horizontal = {
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_config = {
+        horizontal = {
             mirror = false,
-          },
-          vertical = {
+            },
+        vertical = {
             mirror = false,
-          },
+            },
         },
-        file_sorter =  require'telescope.sorters'.get_fzy_sorter,
-        file_ignore_patterns = { "node_modules" },
-        generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-        winblend = 0,
-        border = {},
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-        color_devicons = true,
-        use_less = true,
-        path_display = {},
-        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-        file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-        grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-        qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    winblend = 0,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    path_display = {},
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
 
-        -- Developer configurations: Not meant for general override
-        buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-      },
-      extensions = {
-          fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+    },
+extensions = {
+    fzf = {
+        fuzzy = true,                    -- false will only do exact matching
+        override_generic_sorter = false, -- override the generic sorter
+        override_file_sorter = true,     -- override the file sorter
+        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+        -- the default case_mode is "smart_case"
         }
-      }
     }
-    require('telescope').load_extension('fzy_native')
+  }
+    require('telescope').load_extension('fzf')
 EOF 
 
 " TreeSitter

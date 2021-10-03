@@ -22,6 +22,7 @@ dot and config files for stuff
         - brew install yarn
         - brew install nvim ?
         - brew install fzf
+        - brew install rg
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
         - need to install Language servers
         - https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
@@ -30,6 +31,7 @@ dot and config files for stuff
             - html 
             - jsonls
         - Need to TS install for TreeSitter syntax highlighting [link](https://github.com/nvim-treesitter/nvim-treesitter#language-parsers)
+        - need to install RG for telescope to work 
 	- sym link approrpriate dot files inside these repo
 		- ln -s ~/.../dot-files/zsh/.zshrc ~/.zshrc
 			- zsh
@@ -50,6 +52,8 @@ dot and config files for stuff
 				- author change
 				- have to add personal token.
     - install [NerdFont](https://www.nerdfonts.com/font-downloads)
+    - install Haskell
+        - TODO 
     
 
 - Repos
@@ -70,3 +74,11 @@ dot and config files for stuff
 ## TODOs
 - Think about moving from oh my zsh and running zsh by itself to understand zsh shell more
 - Update nvim to lua and organize plugins and configs in a neater file format structure
+
+
+### nvim 
+- command to complete brackets without pressing enter
+- look into this plugin 
+    - https://github.com/romgrk/barbar.nvim
+    - https://github.com/weilbith/nvim-code-action-menu
+    - https://github.com/crivotz/nv-ide
