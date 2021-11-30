@@ -58,7 +58,11 @@ Plug 'folke/todo-comments.nvim'
 Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
+" TODO: install cmp over deprecated compe
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/nvim-compe'
 " telescope requirements
 Plug 'nvim-lua/popup.nvim'
@@ -68,8 +72,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 "Themes
 Plug 'gruvbox-community/gruvbox'
-"B team Themes
 Plug 'folke/tokyonight.nvim'
+"B team Themes
 Plug 'nightsense/cosmic_latte'
 Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/base16-vim'
@@ -79,37 +83,38 @@ Plug 'chriskempson/base16-vim'
 call plug#end()
 
 set shiftwidth=4
-"Apply theme after plugins are loaded
-" let g:tokyonight_style = "day"
-" let g:tokyonight_italic_functions = 1
-" let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal"]
+" Apply theme after plugins are loaded
+ "let g:tokyonight_style = "night"
+ "let g:tokyonight_italic_functions = 1
+ "let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal"]
 
-" lua << EOF
-"     vim.g.tokyonight_dev = true
-"     vim.g.tokyonight_style = "storm"
-"     vim.g.tokyonight_sidebars = {
-"       "qf",
-"       "vista_kind",
-"       "terminal",
-"       "packer",
-"       "spectre_panel",
-"       "NeogitStatus",
-"       "help",
-"     }
-"     vim.g.tokyonight_cterm_colors = false
-"     vim.g.tokyonight_terminal_colors = true
-"     vim.g.tokyonight_italic_comments = true
-"     vim.g.tokyonight_italic_keywords = true
-"     vim.g.tokyonight_italic_functions = false
-"     vim.g.tokyonight_italic_variables = false
-"     vim.g.tokyonight_transparent = false
-"     vim.g.tokyonight_hide_inactive_statusline = true
-"     vim.g.tokyonight_dark_sidebar = true
-"     vim.g.tokyonight_dark_float = true
-"     vim.g.tokyonight_colors = {}
-"     vim.g.tokyonight_colors = { border = "orange" }
-" EOF
+"lua << EOF
+ "   vim.g.tokyonight_dev = true
+ "   vim.g.tokyonight_style = "storm"
+ "   vim.g.tokyonight_sidebars = {
+ "     "qf",
+ "     "vista_kind",
+ "     "terminal",
+ "     "packer",
+ "     "spectre_panel",
+ "     "NeogitStatus",
+ "     "help",
+ "   }
+ "   vim.g.tokyonight_cterm_colors = false
+ "   vim.g.tokyonight_terminal_colors = true
+ "   vim.g.tokyonight_italic_comments = true
+ "   vim.g.tokyonight_italic_keywords = true
+ "   vim.g.tokyonight_italic_functions = false
+ "   vim.g.tokyonight_italic_variables = false
+ "   vim.g.tokyonight_transparent = false
+ "   vim.g.tokyonight_hide_inactive_statusline = true
+ "   vim.g.tokyonight_dark_sidebar = true
+ "   vim.g.tokyonight_dark_float = true
+ "   vim.g.tokyonight_colors = {}
+ "   vim.g.tokyonight_colors = { border = "orange" }
+"EOF
 " Load the colorscheme
+
 colorscheme gruvbox
 set t_Co=256
 
@@ -217,7 +222,7 @@ lua << EOF
          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics({}, bufnr,_,client.id )<CR>', opts)
      end
      -- Have to download the language servers
-     local servers = {'pyright', 'tsserver', 'html', 'jsonls', 'hls'}
+     local servers = {'pyright', 'tsserver', 'html', 'jsonls', 'hls', 'gopls'}
      for _, lsp in ipairs(servers) do 
          nvim_lsp[lsp].setup {
              on_attach=on_attach

@@ -120,12 +120,6 @@ alias pip="pip3"
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nicholask/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nicholask/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/nicholask/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nicholask/google-cloud-sdk/completion.zsh.inc'; fi
-
 # Base16 Shell
 # BASE16_SHELL="$HOME/.config/base16-shell/"
 # [ -n "$PS1" ] && \
@@ -151,6 +145,14 @@ alias gc="git commit"
 alias gd="git diff"
 alias gds="git diff --staged"
 
+alias dcp="docker-compose"
+
 bindkey -v
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -f "/Users/nickkao/.ghcup/env" ] && source "/Users/nickkao/.ghcup/env" # ghcup-env
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/nickkao/SDK/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nickkao/SDK/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/nickkao/SDK/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nickkao/SDK/google-cloud-sdk/completion.zsh.inc'; fi
