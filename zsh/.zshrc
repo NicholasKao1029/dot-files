@@ -142,6 +142,7 @@ alias lfzf="ls -la | fzf"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
+alias gacm="ga . && git commit -m"
 alias gd="git diff"
 alias gds="git diff --staged"
 

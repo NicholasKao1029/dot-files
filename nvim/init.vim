@@ -21,6 +21,7 @@ set undofile
 set incsearch
 set termguicolors
 set scrolloff=16
+set guicursor=
 " set colorcolumn=80
 set signcolumn=yes
 set backspace=2
