@@ -148,6 +148,9 @@ alias gds="git diff --staged"
 
 alias dcp="docker-compose"
 
+alias ls="exa"
+
+
 bindkey -v
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -f "/Users/nickkao/.ghcup/env" ] && source "/Users/nickkao/.ghcup/env" # ghcup-env
