@@ -80,6 +80,20 @@ Plug 'chriskempson/base16-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'relastle/bluewery.vim'
 Plug 'chriskempson/base16-vim'
+" Spectre find and remove
+Plug 'windwp/nvim-spectre'
+
+"" This stuff tracks you
+" AI programming copilot
+Plug 'github/copilot.vim'
+" Time tracking
+Plug 'wakatime/vim-wakatime'
+
+" Temp .sol syntax highlighting
+Plug 'tomlion/vim-solidity'
+" Trial see if go plugin works well for 416
+Plug 'ray-x/go.nvim'
+
 call plug#end()
 
 set shiftwidth=4
@@ -154,6 +168,13 @@ nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
 nnoremap Y y$
 
+" Spectre
+nnoremap <leader>S :lua require('spectre').open()<CR>
+"search current word
+nnoremap <leader>sw :lua require('spectre').open_visual({select_word=true})<CR>
+"  search in current file
+nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
+
 " cursor centering during movements
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -208,44 +229,72 @@ let g:ale_linters_explicit = 1
 
 " LSP CONFIG
 lua << EOF
-     local nvim_lsp = require('lspconfig')
-     local on_attach = function(client, bufnr)
-         -- require('completion').on_attach()
-         local opts = { noremap=true, silent=true }
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics({}, bufnr,_,client.id )<CR>', opts)
-     end
-     -- Have to download the language servers
-     local servers = {'pyright', 'tsserver', 'html', 'jsonls', 'hls', 'gopls'}
-     for _, lsp in ipairs(servers) do 
-         nvim_lsp[lsp].setup {
-             on_attach=on_attach
-         }
-     end
-     -- diagnostics
+    -- go.nvim setup
+    require('go').setup()
 
-     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        update_in_insert = false,
-        virtual_text = { spacing = 4, prefix = "●" },
-        severity_sort = true,
-    })
+    local nvim_lsp = require('lspconfig')
+    local on_attach = function(client, bufnr)
+        -- require('completion').on_attach()
+        local opts = { noremap=true, silent=true }
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>;', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics({}, bufnr,_,client.id )<CR>', opts)
+    end
+    -- Have to download the language servers
+    -- 'pyright',
+    local servers = {'pylsp', 'tsserver', 'html', 'jsonls', 'hls', 'gopls', 'solidity_ls'}
+    for _, lsp in ipairs(servers) do 
+        nvim_lsp[lsp].setup {
+            on_attach=on_attach
+        }
+    end
+    -- diagnostics
 
-     local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+       underline = true,
+       update_in_insert = false,
+       virtual_text = { spacing = 4, prefix = "■" },
+       severity_sort = true,
+    )
 
-     for type, icon in pairs(signs) do
-       local hl = "LspDiagnosticsSign" .. type
-       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-     end
+    local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+
+    for type, icon in pairs(signs) do
+      local hl = "LspDiagnosticsSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
+
+
+    -- DIAGNOSTICS
+    -- Show all diagnostics on current line in floating window
+    vim.api.nvim_set_keymap(
+      'n', '<Leader>d', ':lua vim.diagnostic.open_float()<CR>', 
+      { noremap = true, silent = true }
+    )
+    -- -- Go to next diagnostic (if there are multiple on the same line, only shows
+    -- -- one at a time in the floating window)
+    -- vim.api.nvim_set_keymap(
+    --   'n', '<Leader>n', ':lua vim.diagnostic.goto_next()<CR>',
+    --   { noremap = true, silent = true }
+    -- )
+    -- -- -- Go to prev diagnostic (if there are multiple on the same line, only shows
+    -- -- -- one at a time in the floating window)
+    -- vim.api.nvim_set_keymap(
+    --   'n', '<Leader>p', ':lua vim.diagnostic.goto_prev()<CR>',
+    --   { noremap = true, silent = true }
+    -- )
+
+    
+
 EOF
 
 " Lightline config
@@ -333,6 +382,18 @@ lua << EOF
         additional_vim_regex_highlighting = false,
       },
     }
+
+-- for solidity 
+--    require "nvim-treesitter.parsers".get_parser_configs().Solidity = {
+--      install_info = {
+--        url = "https://github.com/JoranHonig/tree-sitter-solidity",
+--        files = {"src/parser.c"},
+--        requires_generate_from_grammar = true,
+--      },
+--      filetype = 'solidity'
+--    }
+
+
 EOF
 
 " Tree
