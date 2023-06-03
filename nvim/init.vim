@@ -31,7 +31,7 @@ set laststatus=2
 set t_Co=256
 set autoindent
 " set statusline+=%F
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/site/autoload')
 Plug 'tpope/vim-sensible'
 Plug 'nvim-lua/plenary.nvim'
 " comments ,parenthesis and quotes
@@ -73,13 +73,13 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 "Themes
 Plug 'gruvbox-community/gruvbox'
-Plug 'folke/tokyonight.nvim'
+"Plug 'folke/tokyonight.nvim'
 "B team Themes
-Plug 'arcticicestudio/nord-vim'
-Plug 'chriskempson/base16-vim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'relastle/bluewery.vim'
-Plug 'chriskempson/base16-vim'
+"Plug 'arcticicestudio/nord-vim'
+"Plug 'chriskempson/base16-vim'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'relastle/bluewery.vim'
+"Plug 'chriskempson/base16-vim'
 " Spectre find and remove
 Plug 'windwp/nvim-spectre'
 
@@ -87,12 +87,8 @@ Plug 'windwp/nvim-spectre'
 " AI programming copilot
 Plug 'github/copilot.vim'
 " Time tracking
-Plug 'wakatime/vim-wakatime'
-
-" Temp .sol syntax highlighting
-Plug 'tomlion/vim-solidity'
 " Trial see if go plugin works well for 416
-Plug 'ray-x/go.nvim'
+"Plug 'ray-x/go.nvim'
 
 call plug#end()
 
