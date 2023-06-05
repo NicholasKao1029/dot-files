@@ -25,7 +25,7 @@ dot and config files for stuff
         - brew install rg
 	- install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
         - need to install Language servers
-        - https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
+        - https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             - pyright
             - tsserver
             - html 
